@@ -1,0 +1,10 @@
+[project]
+name = "netlab-from-nautobot"
+version = "0.1.0"
+description = "Bridge Nautobot SoT to containerlab netlab"
+requires-python = ">=3.10"
+dependencies = [
+    "pynautobot>=2.4",
+    "pyyaml>=6.0",
+    "python-dotenv>=1.0",
+]

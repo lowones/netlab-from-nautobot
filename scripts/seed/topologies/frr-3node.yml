@@ -1,0 +1,70 @@
+location:
+  name: homelab
+  type: Site
+
+manufacturer: FRRouting
+platform:
+  name: FRR
+  network_driver: frrouting_frr
+
+device_type:
+  manufacturer: FRRouting
+  model: frr-virtual
+  u_height: 0
+
+role: router
+
+namespace: Global
+
+prefixes:
+  - prefix: 10.0.0.0/24       # loopbacks
+    type: container
+  - prefix: 10.1.12.0/24
+    type: pool
+  - prefix: 10.1.13.0/24
+    type: pool
+  - prefix: 10.1.23.0/24
+    type: pool
+
+devices:
+  - name: r1
+    primary_ip4: 10.0.0.1/32
+    interfaces:
+      - name: lo
+        type: virtual
+        ip4: 10.0.0.1/32
+      - name: eth1
+        type: 1000base-t
+        ip4: 10.1.12.1/24
+      - name: eth2
+        type: 1000base-t
+        ip4: 10.1.13.1/24
+  - name: r2
+    primary_ip4: 10.0.0.2/32
+    interfaces:
+      - name: lo
+        type: virtual
+        ip4: 10.0.0.2/32
+      - name: eth1
+        type: 1000base-t
+        ip4: 10.1.12.2/24
+      - name: eth2
+        type: 1000base-t
+        ip4: 10.1.23.2/24
+  - name: r3
+    primary_ip4: 10.0.0.3/32
+    interfaces:
+      - name: lo
+        type: virtual
+        ip4: 10.0.0.3/32
+      - name: eth1
+        type: 1000base-t
+        ip4: 10.1.23.3/24
+      - name: eth2
+        type: 1000base-t
+        ip4: 10.1.13.3/24
+
+cables:
+  - [r1, eth1, r2, eth1]
+  - [r2, eth2, r3, eth1]
+  - [r3, eth2, r1, eth2]

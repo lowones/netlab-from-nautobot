@@ -1,0 +1,20 @@
+query ($location: [String]) {
+  devices(location: $location) {
+    id
+    name
+    primary_ip4 { address }
+    platform { name network_driver }
+    interfaces {
+      id
+      name
+      type
+      ip_addresses { address }
+      cable {
+        termination_a_id
+        termination_a_type
+        termination_b_id
+        termination_b_type
+      }
+    }
+  }
+}

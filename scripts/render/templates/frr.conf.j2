@@ -1,0 +1,22 @@
+hostname {{ device.name }}
+no ipv6 forwarding
+!
+{% for iface in device.interfaces %}
+interface {{ iface.name }}
+{% if iface.name != 'lo' %}
+ ip ospf network point-to-point
+{% endif %}
+{% for addr in iface.addresses %}
+ ip address {{ addr }}
+{% endfor %}
+{% endfor %}
+!
+router ospf
+ ospf router-id {{ device.router_id }}
+{% for iface in device.interfaces %}
+{% for net in iface.networks %}
+ network {{ net }} area 0
+{% endfor %}
+{% endfor %}
+!
+line vty

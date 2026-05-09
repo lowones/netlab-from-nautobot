@@ -7,4 +7,5 @@ dependencies = [
     "pynautobot>=2.4",
     "pyyaml>=6.0",
     "python-dotenv>=1.0",
+    "jinja2>=3.1",
 ]

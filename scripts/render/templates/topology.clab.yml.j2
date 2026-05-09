@@ -1,0 +1,19 @@
+name: {{ topology_name }}
+
+topology:
+  defaults:
+    kind: linux
+    image: {{ frr_image }}
+
+  nodes:
+{% for d in devices %}
+    {{ d.name }}:
+      mgmt-ipv4: {{ d.mgmt_ip }}
+      binds:
+        - configs/{{ d.name }}/daemons:/etc/frr/daemons
+        - configs/{{ d.name }}/frr.conf:/etc/frr/frr.conf
+{% endfor %}
+  links:
+{% for link in links %}
+    - endpoints: ["{{ link.a_dev }}:{{ link.a_iface }}", "{{ link.b_dev }}:{{ link.b_iface }}"]
+{% endfor %}

@@ -134,7 +134,7 @@ def render(args) -> None:
     token = os.environ["NAUTOBOT_TOKEN"]
 
     here = Path(__file__).parent
-    query = (here / "query.gql").read_text()
+    query = (here.parent / "common" / "topology.gql").read_text()
 
     print(f"Querying Nautobot for devices at location='{args.location}'...")
     data = graphql_query(url, token, query, {"location": [args.location]})
